@@ -4,17 +4,21 @@ import styled from 'styled-components';
 import setupMSW from '../api/setup';
 import GlobalStyle from '../styles/GlobalStyle';
 
+import {
+  RecoilRoot,
+} from 'recoil';
+
 setupMSW();
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <>
+    <RecoilRoot>
       <GlobalStyle />
       <Background />
       <Content>
         <Component {...pageProps} />
       </Content>
-    </>
+    </RecoilRoot>
   );
 }
 

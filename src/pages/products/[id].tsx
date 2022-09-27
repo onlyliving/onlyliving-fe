@@ -1,44 +1,27 @@
 import Link from 'next/link';
 import type { NextPage } from 'next';
 import React from 'react';
+import Header from '../../components/Header';
 import styled from 'styled-components';
 
 import products from '../../api/data/products.json';
 
 const ProductDetailPage: NextPage = () => {
-  const product = products[0];
+	const product = products[0];
 
-  return (
-    <>
-      <Header>
-        <Link href='/'>
-          <Title>HAUS</Title>
-        </Link>
-        <Link href='/login'>
-          <p>login</p>
-        </Link>
-      </Header>
-      <Thumbnail src={product.thumbnail ? product.thumbnail : '/defaultThumbnail.jpg'} />
-      <ProductInfoWrapper>
-        <Name>{product.name}</Name>
-        <Price>{product.price}원</Price>
-      </ProductInfoWrapper>
-    </>
-  );
+	return (
+		<>
+			<Header />
+			<Thumbnail src={product.thumbnail ? product.thumbnail : '/defaultThumbnail.jpg'} />
+			<ProductInfoWrapper>
+				<Name>{product.name}</Name>
+				<Price>{product.price}원</Price>
+			</ProductInfoWrapper>
+		</>
+	);
 };
 
 export default ProductDetailPage;
-
-const Header = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-`;
-
-const Title = styled.a`
-  font-size: 48px;
-`;
 
 const Thumbnail = styled.img`
   width: 100%;
