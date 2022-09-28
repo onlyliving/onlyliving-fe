@@ -80,14 +80,14 @@ export const requestGetUserInfo = (urlQueryData: {
   });
 };
 
-interface IProduct {
+export interface IProduct {
   id: string;
   name: string;
   thumbnail: string;
   price: number;
 }
 
-interface IResponseProducts {
+export interface IResponseProducts {
   data: {
     totalCount: number;
     products: IProduct[];
