@@ -36,8 +36,11 @@ const Input: React.FC<Props> = ({
         onBlur={e => {
           const { result, msg } = handleInputVaild(e, inputTitle);
           setInputVaild(handleInputVaild(e, inputTitle));
-          setIsSignInPass({ ...isSignInPass, [name]: result })
-          setSigninValue({ ...signinValue, [name === "userId" ? "id" : name]: e.target.value })
+          setIsSignInPass({ ...isSignInPass, [name]: result });
+          setSigninValue({ ...signinValue, [name === "userId" ? "id" : name]: e.target.value });
+
+          const inputTarget = e.target;
+          inputTarget.style.background = result === true ? "#F7F7FA" : "#FDEDEE";
         }}
 
         placeholder={placeholder}
