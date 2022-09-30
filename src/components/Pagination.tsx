@@ -42,23 +42,11 @@ const Pagination: React.FC<IPagination> = ({
   console.log("currentPage => ", currentPage)
   console.log("pageList => ", pageList);
 
-  /**
-   *
-   * e.g.
-   * currentPage : 현재 페이지 7
-   * totalDataCount (totalCount) : 총 데이터 수 -> 105
-   * dataCountPerPage : 페이지당 보여지는 데이터 수 -> 10
-   * totalPageCount : 총 페이지 수 -> 105 / 10 -> 올림해서 11 페이지
-   * paginationCountPerPage : 페이지당 보여지는 페이지번호 수 -> 5
-   * currentPageGroup : 현재 페이지 그룹 -> 2
-   * totalPageGroup : 총 페이지 그룹 -> 3
-   */
   const dataCountPerPage = 10;
   const paginationCountPerPage = 5;
   const totalPageCount = totalCount / dataCountPerPage;
   const currentPageGroup = Math.ceil(currentPage / paginationCountPerPage);
   const totalPageGroup = Math.ceil(totalPageCount / paginationCountPerPage);
-
 
   const isDisabledPrev = () => {
     if (currentPageGroup === 1) {

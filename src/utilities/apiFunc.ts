@@ -1,10 +1,5 @@
 import { requestPOST, requestGET } from './index';
 
-interface IRequestLogin {
-  id: string;
-  password: string;
-}
-
 export interface IUserSigninData {
   accessToken: string;
   user: {
@@ -16,9 +11,10 @@ export interface IResponseLogin {
   data: IUserSigninData;
 }
 
-export const requestPostLogin = (
-  requestData: IRequestLogin
-): Promise<{
+export const requestPostLogin = (requestData: {
+  id: string;
+  password: string;
+}): Promise<{
   status: boolean;
   data: IResponseLogin | IResponseError;
 }> => {
@@ -28,12 +24,12 @@ export const requestPostLogin = (
       if (status === 404) {
         resolve({
           status: false,
-          data: resData as IResponseLogin,
+          data: resData as IResponseError,
         });
       } else {
         resolve({
           status: true,
-          data: resData as IResponseError,
+          data: resData as IResponseLogin,
         });
       }
     });
@@ -68,12 +64,12 @@ export const requestGetUserInfo = (urlQueryData: {
       if (status === 404) {
         resolve({
           status: false,
-          data: resData as IResponseUserInfo,
+          data: resData as IResponseError,
         });
       } else {
         resolve({
           status: true,
-          data: resData as IResponseError,
+          data: resData as IResponseUserInfo,
         });
       }
     });
@@ -83,7 +79,7 @@ export const requestGetUserInfo = (urlQueryData: {
 export interface IProduct {
   id: string;
   name: string;
-  thumbnail: string;
+  thumbnail: string | null;
   price: number;
 }
 
@@ -105,22 +101,23 @@ export const requestGetProducts = (urlQueryData: {
   const { page, size } = urlQueryData;
   return new Promise((resolve, reject) => {
     requestGET(`/products?page=${page}&size=${size}`, (status, resData) => {
+      console.log(`%c /products?page=${page}&size=${size}`, 'color:yellow');
       if (status === 404) {
         resolve({
           status: false,
-          result: resData as IResponseProducts,
+          result: resData as IResponseError,
         });
       } else {
         resolve({
           status: true,
-          result: resData as IResponseError,
+          result: resData as IResponseProducts,
         });
       }
     });
   });
 };
 
-interface IResponseProductDetail {
+export interface IResponseProductDetail {
   data: {
     product: IProduct;
   };
@@ -139,12 +136,12 @@ export const requestGetProductDetail = (urlQueryData: {
       if (status === 404) {
         resolve({
           status: false,
-          data: resData as IResponseProductDetail,
+          data: resData as IResponseError,
         });
       } else {
         resolve({
           status: true,
-          data: resData as IResponseError,
+          data: resData as IResponseProductDetail,
         });
       }
     });

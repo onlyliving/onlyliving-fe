@@ -1,31 +1,68 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import type { NextPage } from 'next';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../../components/Header';
 import styled from 'styled-components';
+import { addComma } from "../../utilities/index";
 
-import products from '../../api/data/products.json';
+import { requestGetProductDetail, IResponseProductDetail, IProduct } from "../../utilities/apiFunc";
 
 const ProductDetailPage: NextPage = () => {
-	const product = products[0];
+  const router = useRouter();
+  const { id } = router.query;
+  console.log("id =>", id)
 
-	return (
-		<>
-			<Header />
-			<Thumbnail src={product.thumbnail ? product.thumbnail : '/defaultThumbnail.jpg'} />
-			<ProductInfoWrapper>
-				<Name>{product.name}</Name>
-				<Price>{product.price}원</Price>
-			</ProductInfoWrapper>
-		</>
-	);
+  const [product, setProduct] = useState<IProduct | undefined>();
+
+  useEffect(() => {
+    if (id && typeof (id) === "string") {
+      requestGetProductDetail({ productId: id }).then(resData => {
+        console.log(resData);
+        if (resData.status) {
+          const responseData = resData.data as IResponseProductDetail;
+          setProduct(responseData.data.product);
+        }
+
+      })
+    }
+  }, [id]);
+
+  return (
+    <>
+      <Header />
+      {
+        product ?
+          <Main>
+            <Thumbnail src={product.thumbnail ? product.thumbnail : '/defaultThumbnail.jpg'} />
+            <ProductInfoWrapper>
+              <Name>{product.name}</Name>
+              <Price>{addComma(product.price.toString())}원</Price>
+            </ProductInfoWrapper>
+          </Main> :
+          <Main>
+            <EmptyData>존재하지 않는 상품입니다.</EmptyData>
+          </Main>
+      }
+    </>
+  );
 };
 
 export default ProductDetailPage;
 
+const Main = styled.main`
+  position:relative;
+`;
+
+const EmptyData = styled.p`
+  display: flex;
+  height: calc(100vh - 97.5px);
+  align-items: center;
+  justify-content: center;
+`;
+
 const Thumbnail = styled.img`
   width: 100%;
-  height: 420px;
 `;
 
 const ProductInfoWrapper = styled.div`

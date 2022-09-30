@@ -1,18 +1,20 @@
 import styled from 'styled-components';
+import { IProduct } from '../utilities/apiFunc';
+import { addComma } from "../utilities/index";
 
-import { Product } from '../types/product';
-
-type ProductItemProps = {
-  product: Product;
+interface IProductItem {
+  product: IProduct;
 };
 
-const ProductItem = ({ product: { name, thumbnail, price } }: ProductItemProps) => (
-  <Container>
-    <Thumbnail src={thumbnail ? thumbnail : '/defaultThumbnail.jpg'} />
-    <Name>{name}</Name>
-    <Price>{price}</Price>
-  </Container>
-);
+const ProductItem = ({ product: { id, name, thumbnail, price } }: IProductItem) => {
+  return (
+    <Container href={`/products/${id}`} className="js-box">
+      <Thumbnail data-lazy={thumbnail ? thumbnail : '/defaultThumbnail.jpg'} alt="제품 이미지" />
+      <Name>{name}</Name>
+      <Price>{addComma(price.toString())}원</Price>
+    </Container>
+  )
+};
 
 export default ProductItem;
 
@@ -23,8 +25,9 @@ const Container = styled.a`
 `;
 
 const Thumbnail = styled.img`
-  width: 100%;
+  width: 180px;
   height: 180px;
+  object-fit: cover;
 `;
 
 const Name = styled.div`

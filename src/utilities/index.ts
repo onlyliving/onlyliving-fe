@@ -14,6 +14,11 @@ export const parseQueryString = (search: string): Record<string, string> =>
       return acc;
     }, {} as Record<string, string>);
 
+export const addComma = (str: string) => {
+  str = String(str);
+  return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+};
+
 export const handleInputVaild = (
   event: React.FocusEvent,
   title: string

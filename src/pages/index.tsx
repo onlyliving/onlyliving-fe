@@ -1,10 +1,15 @@
 import Link from 'next/link';
 import type { NextPage } from 'next';
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import Header from '../components/Header';
 
 const HomePage: NextPage = () => {
+  useEffect(() => {
+    localStorage.removeItem("infiniteScrollData")
+    localStorage.removeItem("infiniteScrollPosY");
+  }, []);
+
   return (
     <>
       <Header />

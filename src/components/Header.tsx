@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
 import { useRecoilState } from "recoil";
@@ -7,7 +7,15 @@ import { signinState } from '../utilities/atom';
 const Header: React.FC = () => {
   const [userSiginData, setUserSiginData] = useRecoilState(signinState);
 
+  useEffect(() => {
+    if (localStorage.hausAuth) {
+      setUserSiginData({ isSignin: true, ...JSON.parse(localStorage.hausAuth) })
+    }
+
+  }, []);
+
   const handleLogout = () => {
+    localStorage.removeItem("hausAuth");
     setUserSiginData({ isSignin: false });
   }
 
