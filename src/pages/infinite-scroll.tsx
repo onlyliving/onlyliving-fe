@@ -19,7 +19,7 @@ const InfiniteScrollPage: NextPage = () => {
 
   const paddingFunction = debounceFunc({
     callback: () => {
-      localStorage.setItem("infiniteScrollPosY", document.getElementsByClassName("is-scroll")[0]?.scrollTop.toString());
+      localStorage.setItem("infiniteScrollPosY", document.getElementsByClassName("js-scroll")[0]?.scrollTop.toString());
     },
     ms: 100,
   })
@@ -29,7 +29,7 @@ const InfiniteScrollPage: NextPage = () => {
   }
 
   useEffect(() => {
-    document.getElementsByClassName("is-scroll")[0]?.addEventListener("scroll", (event) => {
+    document.getElementsByClassName("js-scroll")[0]?.addEventListener("scroll", (event) => {
       handleScroll();
     });
 
@@ -53,8 +53,7 @@ const InfiniteScrollPage: NextPage = () => {
 
   useEffect(() => {
     if (scrollPositionY !== 0 && (productItems && productItems.length !== 0)) {
-      document.getElementsByClassName("is-scroll")[0].scrollTop = scrollPositionY;
-
+      document.getElementsByClassName("js-scroll")[0].scrollTop = scrollPositionY;
     }
 
   }, [scrollPositionY, productItems]);
@@ -63,9 +62,6 @@ const InfiniteScrollPage: NextPage = () => {
     if (productItems && productItems.length !== 0) {
       const totalPage = Math.ceil(totalCount / size);
 
-      console.log("totalPage => ", totalPage);
-      console.log("page => ", page);
-
       const intersectionObserverOptions = {
         root: viewport.current,
         rootMargin: "0px",
@@ -73,7 +69,6 @@ const InfiniteScrollPage: NextPage = () => {
       };
 
       const handleIntersection = (entries: IntersectionObserverEntry[]) => {
-        console.log("> handleIntersection");
         entries.forEach(entry => {
           const isIntersecting = entry.isIntersecting;
           const isLastPage = totalPage <= page;
@@ -82,8 +77,6 @@ const InfiniteScrollPage: NextPage = () => {
             if (isLastPage) {
               // 마지막 페이지 체크
               console.log("마지막 페이지 입니다.")
-              console.log("totalPage => ", totalPage);
-              console.log("page => ", page);
               return false;
             }
 
@@ -109,11 +102,6 @@ const InfiniteScrollPage: NextPage = () => {
                 clonedResponseData.push(...productsData);
                 setProductItems(clonedResponseData);
                 setPage(requestQuery.page);
-
-                console.log("viewport.current =>", viewport.current);
-                console.log(`document.getElementsByClassName("is-scroll")[0].scrollTop => 1`, document.getElementsByClassName("is-scroll")[0].scrollTop);
-
-
 
                 const saveData = {
                   page: requestQuery.page,
@@ -157,7 +145,7 @@ const InfiniteScrollPage: NextPage = () => {
       {
         productItems && productItems.length !== 0 ?
           <>
-            <Container ref={viewport} className="is-scroll">
+            <Container ref={viewport} className="js-scroll">
               <Heading>무한 스크롤 페이지</Heading>
               <ProductList products={productItems} />
               <div ref={observeTarget}></div>

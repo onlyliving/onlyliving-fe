@@ -11,7 +11,6 @@ const PaginationPage: NextPage = () => {
   const router = useRouter();
   const { page } = router.query;
   const [apiResDataProducts, setApiResDataProducts] = useState<IResponseProducts | null>();
-  console.log("apiResDataProducts => ", apiResDataProducts);
   useEffect(() => {
     if (page) {
       requestGetProducts({

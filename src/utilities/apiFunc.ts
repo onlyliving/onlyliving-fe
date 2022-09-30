@@ -18,7 +18,6 @@ export const requestPostLogin = (requestData: {
   status: boolean;
   data: IResponseLogin | IResponseError;
 }> => {
-  console.log('> requestPostLogin');
   return new Promise((resolve, reject) => {
     requestPOST('/login', requestData, (status, resData) => {
       if (status === 404) {
@@ -57,7 +56,6 @@ export const requestGetUserInfo = (urlQueryData: {
   status: boolean;
   data: IResponseUserInfo | IResponseError;
 }> => {
-  console.log('> requestGetUserInfo');
   const { userId } = urlQueryData;
   return new Promise((resolve, reject) => {
     requestGET(`/users/${userId}`, (status, resData) => {
@@ -97,7 +95,6 @@ export const requestGetProducts = (urlQueryData: {
   status: boolean;
   result: IResponseProducts | IResponseError;
 }> => {
-  console.log('> requestGetProducts');
   const { page, size } = urlQueryData;
   return new Promise((resolve, reject) => {
     requestGET(`/products?page=${page}&size=${size}`, (status, resData) => {
@@ -129,7 +126,6 @@ export const requestGetProductDetail = (urlQueryData: {
   status: boolean;
   data: IResponseProductDetail | IResponseError;
 }> => {
-  console.log('> requestGetProductDetail');
   const { productId } = urlQueryData;
   return new Promise((resolve, reject) => {
     requestGET(`/products/${productId}`, (status, resData) => {

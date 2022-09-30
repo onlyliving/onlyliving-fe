@@ -11,14 +11,11 @@ import { requestGetProductDetail, IResponseProductDetail, IProduct } from "../..
 const ProductDetailPage: NextPage = () => {
   const router = useRouter();
   const { id } = router.query;
-  console.log("id =>", id)
-
   const [product, setProduct] = useState<IProduct | undefined>();
 
   useEffect(() => {
     if (id && typeof (id) === "string") {
       requestGetProductDetail({ productId: id }).then(resData => {
-        console.log(resData);
         if (resData.status) {
           const responseData = resData.data as IResponseProductDetail;
           setProduct(responseData.data.product);
