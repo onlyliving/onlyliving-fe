@@ -1,9 +1,9 @@
-interface useDebounceProps {
+interface IDebounceFunc {
   callback: () => void;
   ms: number;
 }
 
-const useDebounce = ({ callback, ms }: useDebounceProps) => {
+const debounceFunc = ({ callback, ms }: IDebounceFunc) => {
   let timer: any;
 
   return function () {
@@ -15,4 +15,4 @@ const useDebounce = ({ callback, ms }: useDebounceProps) => {
   };
 };
 
-export default useDebounce;
+export default debounceFunc;

@@ -5,7 +5,7 @@ import ProductList from '../components/ProductList';
 import Header from '../components/Header';
 import { requestGetProducts, IResponseProducts, IProduct } from "../utilities/apiFunc";
 import { cloneDeep } from "lodash";
-import useDebounce from '../hooks/useDebounce';
+import debounceFunc from '../utilities/debounceFunc';
 
 const InfiniteScrollPage: NextPage = () => {
 
@@ -17,7 +17,7 @@ const InfiniteScrollPage: NextPage = () => {
   const viewport = useRef(null);
   const observeTarget = useRef(null);
 
-  const paddingFunction = useDebounce({
+  const paddingFunction = debounceFunc({
     callback: () => {
       localStorage.setItem("infiniteScrollPosY", document.getElementsByClassName("is-scroll")[0]?.scrollTop.toString());
     },
