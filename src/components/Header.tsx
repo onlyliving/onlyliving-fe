@@ -52,8 +52,9 @@ const HeaderBox = styled.header`
   padding: 20px;
 `;
 
-const Title = styled.a`
+const Title = styled.h1`
   font-size: 48px;
+  cursor: pointer
 `;
 
 const LoginBox = styled.div`

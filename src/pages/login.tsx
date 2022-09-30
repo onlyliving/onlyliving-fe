@@ -9,7 +9,8 @@ const LoginPage: NextPage = () => {
   return (
     <>
       <Header />
-      <Form>
+      <Main>
+        <Heading>로그인 페이지</Heading>
         <Input
           name='userId'
           inputTitle='아이디'
@@ -23,16 +24,27 @@ const LoginPage: NextPage = () => {
           max={30}
         />
         <LoginButton />
-      </Form>
+      </Main>
     </>
   );
 };
 
 export default LoginPage;
 
-const Form = styled.form`
+const Main = styled.main`
   display: flex;
   flex-direction: column;
   margin-top: 40px;
   padding: 0 20px 40px;
+`;
+
+const Heading = styled.h2`
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
 `;

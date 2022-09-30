@@ -139,7 +139,6 @@ const InfiniteScrollPage: NextPage = () => {
     }
 
     if (!localStorage.infiniteScrollData && page === 1) {
-      console.log("here");
       requestGetProducts({ page: page, size: size }).then(resData => {
         if (resData.status) {
           const responseData = resData.result as IResponseProducts;
@@ -159,6 +158,7 @@ const InfiniteScrollPage: NextPage = () => {
         productItems && productItems.length !== 0 ?
           <>
             <Container ref={viewport} className="is-scroll">
+              <Heading>무한 스크롤 페이지</Heading>
               <ProductList products={productItems} />
               <div ref={observeTarget}></div>
             </Container>
@@ -171,7 +171,7 @@ const InfiniteScrollPage: NextPage = () => {
 
 export default InfiniteScrollPage;
 
-const Container = styled.div`
+const Container = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -179,5 +179,15 @@ const Container = styled.div`
   overflow-y: scroll;
   height: calc(100vh - 97.5px);
   overflow-x: hidden;
+`;
 
+const Heading = styled.h2`
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
 `;

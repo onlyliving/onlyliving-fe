@@ -14,11 +14,12 @@ const HomePage: NextPage = () => {
     <>
       <Header />
       <Container>
+        <Heading>메인 페이지</Heading>
         <Link href='/pagination?page=1'>
-          <StyledLink>pagination</StyledLink>
+          <StyledLink type="button">pagination</StyledLink>
         </Link>
         <Link href='/infinite-scroll'>
-          <StyledLink>infinite scroll</StyledLink>
+          <StyledLink type="button">infinite scroll</StyledLink>
         </Link>
       </Container>
     </>
@@ -27,7 +28,7 @@ const HomePage: NextPage = () => {
 
 export default HomePage;
 
-const Container = styled.div`
+const Container = styled.main`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -36,7 +37,7 @@ const Container = styled.div`
   margin-top: 40px;
 `;
 
-const StyledLink = styled.a`
+const StyledLink = styled.button`
   display: flex;
   justify-content: center;
   width: 240px;
@@ -45,8 +46,20 @@ const StyledLink = styled.a`
   background-color: #222;
   color: #fff;
   font-size: 24px;
+  cursor: pointer;
 
   & + & {
     margin-top: 40px;
   }
+`;
+
+const Heading = styled.h2`
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
 `;

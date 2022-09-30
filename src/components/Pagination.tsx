@@ -71,7 +71,6 @@ const Pagination: React.FC<IPagination> = ({
     setLeftDisable(isDisabledPrev());
     setRightDisable(isDisabledNext());
 
-
   }, [currentPage]);
 
   const handlePaginationBtn = (event: React.MouseEvent) => {
@@ -92,55 +91,60 @@ const Pagination: React.FC<IPagination> = ({
 
   return (
     <Container>
-      <Button
-        type="button"
-        onClick={e => handlePaginationArrowBtn("prev")}
-        disabled={leftDisable}
-      >
-        이전 페이지
-        <VscChevronLeft />
-      </Button>
-      <PageWrapper>
-        {pageList?.map((page) => (
-          <Page
-            type="button"
-            key={page}
-            data-value={page}
-            selected={page === currentPage}
-            disabled={page === currentPage}
-            onClick={handlePaginationBtn}
-          >
-            {page}
-          </Page>
-        ))}
-      </PageWrapper>
-      <Button
-        type="button"
-        onClick={e => handlePaginationArrowBtn("next")}
-        disabled={rightDisable}
-      >
-        다음 페이지
-        <VscChevronRight />
-      </Button>
+      <Heading>페이지 번호</Heading>
+      <Wrap>
+        <Button
+          type="button"
+          onClick={e => handlePaginationArrowBtn("prev")}
+          disabled={leftDisable}
+        >
+          이전 페이지
+          <VscChevronLeft />
+        </Button>
+        <PageWrapper>
+          {pageList?.map((page) => (
+            <Page
+              type="button"
+              key={page}
+              data-value={page}
+              selected={page === currentPage}
+              disabled={page === currentPage}
+              onClick={handlePaginationBtn}
+            >
+              {page}
+            </Page>
+          ))}
+        </PageWrapper>
+        <Button
+          type="button"
+          onClick={e => handlePaginationArrowBtn("next")}
+          disabled={rightDisable}
+        >
+          다음 페이지
+          <VscChevronRight />
+        </Button>
+      </Wrap>
     </Container>
   );
 };
 
 export default Pagination;
 
-const Container = styled.div`
+const Container = styled.section`
+  margin-top: 40px;
+`;
+
+const Wrap = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   width: 400px;
-  margin-top: 40px;
-  margin-left: -20px;
 `;
 
 const Button = styled.button`
   display: flex;
-  align-items: center;s
+  align-items: center;
   height: 32px;
   text-indent: -9999px;
   cursor: pointer;
@@ -160,17 +164,25 @@ type PageType = {
 };
 
 const Page = styled.button<PageType>`
-  padding: 4px 6px;
+  width: 30px;
+  padding: 4px 0;
   background-color: ${({ selected }) => (selected ? '#000' : 'transparent')};
   color: ${({ selected }) => (selected ? '#fff' : '#000')};
   font-size: 20px;
   cursor: pointer;
 
-  & + & {
-    margin-left: 4px;
-  }
-
   &:disabled {
     cursor: default;
   }
+`;
+
+const Heading = styled.h2`
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
 `;

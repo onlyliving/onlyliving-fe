@@ -37,18 +37,37 @@ const ProductList = ({ products }: IProductList) => {
 
   return (
     <Container ref={viewport}>
-      {products.map((product) => (
-        <ProductItem key={product.id} product={product} />
-      ))}
+      <Heading>상품 목록</Heading>
+      <List>
+        {products.map((product) => (
+          <ProductItem key={product.id} product={product} />
+        ))}
+      </List>
     </Container>
   )
 };
 
 export default ProductList;
 
-const Container = styled.div`
+const Container = styled.section`
+  position:relative;
+`;
+
+const Heading = styled.h2`
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+`;
+
+const List = styled.ul`
+  position:relative;
   display: flex;
   flex-wrap: wrap;
-  width: 400px;
   margin-left: -20px;
+  width: 400px;
 `;
