@@ -1,61 +1,91 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import type { NextPage } from 'next';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import Header from '../../components/Header';
 import styled from 'styled-components';
+import { addComma } from "../../utilities/index";
 
-import products from '../../api/data/products.json';
+import { requestGetProductDetail, IResponseProductDetail, IProduct } from "../../utilities/apiFunc";
 
 const ProductDetailPage: NextPage = () => {
-  const product = products[0];
+  const router = useRouter();
+  const { id } = router.query;
+  const [product, setProduct] = useState<IProduct | undefined>();
+
+  useEffect(() => {
+    if (id && typeof (id) === "string") {
+      requestGetProductDetail({ productId: id }).then(resData => {
+        if (resData.status) {
+          const responseData = resData.data as IResponseProductDetail;
+          setProduct(responseData.data.product);
+        }
+
+      })
+    }
+  }, [id]);
 
   return (
     <>
-      <Header>
-        <Link href='/'>
-          <Title>HAUS</Title>
-        </Link>
-        <Link href='/login'>
-          <p>login</p>
-        </Link>
-      </Header>
-      <Thumbnail src={product.thumbnail ? product.thumbnail : '/defaultThumbnail.jpg'} />
-      <ProductInfoWrapper>
-        <Name>{product.name}</Name>
-        <Price>{product.price}원</Price>
-      </ProductInfoWrapper>
+      <Header />
+      <Main>
+        <Heading>상품 상세 페이지</Heading>
+        {
+          product ?
+            <div>
+              <Thumbnail src={product.thumbnail ? product.thumbnail : '/defaultThumbnail.jpg'} alt="상품 이미지" />
+              <ProductInfoWrapper>
+                <Name>{product.name}</Name>
+                <Price>{addComma(product.price.toString())}원</Price>
+              </ProductInfoWrapper>
+            </div>
+            :
+            <EmptyData>존재하지 않는 상품입니다.</EmptyData>
+        }
+      </Main>
     </>
   );
 };
 
 export default ProductDetailPage;
 
-const Header = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
+const Main = styled.main`
+  position:relative;
 `;
 
-const Title = styled.a`
-  font-size: 48px;
+const EmptyData = styled.p`
+  display: flex;
+  height: calc(100vh - 97.5px);
+  align-items: center;
+  justify-content: center;
 `;
 
 const Thumbnail = styled.img`
   width: 100%;
-  height: 420px;
 `;
 
-const ProductInfoWrapper = styled.div`
+const ProductInfoWrapper = styled.ul`
   margin-top: 20px;
   padding: 0 20px;
 `;
 
-const Name = styled.div`
+const Name = styled.li`
   font-size: 20px;
   font-weight: bold;
 `;
 
-const Price = styled.div`
+const Price = styled.li`
   font-size: 18px;
   margin-top: 8px;
 `;
+
+const Heading = styled.h2`
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+`
